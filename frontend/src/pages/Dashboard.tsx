@@ -246,6 +246,7 @@ const Dashboard = () => {
     if (!user) return;
     setSendingTestEmail(true);
     try {
+      console.log(api.getUri);
       await api.post(`/${user.clientId}`, {
         name: "Test User",
         email: "test@example.com",

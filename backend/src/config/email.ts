@@ -1,4 +1,5 @@
 import nodemailer from "nodemailer";
+import SMTPTransport from "nodemailer/lib/smtp-transport";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -18,9 +19,4 @@ export const transporter = nodemailer.createTransport({
   connectionTimeout: 10000, // 10 seconds
   debug: true, // Show debug output
   logger: true, // Log information to console
-});
-
-export const CLIENT_EMAILS: Record<string, string> = {
-  "finance-site": "finance.consult@gmail.com",
-  "real-estate": "homeseller.agent@gmail.com",
-};
+} as SMTPTransport.Options);
