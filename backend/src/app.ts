@@ -1,8 +1,14 @@
 import express from "express";
 import helmet from "helmet";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 import { corsOptions } from "./config/cors";
 import emailRoutes from "./routes/email.routes";
+import authRoutes from "./routes/auth.routes";
+import { connectDB } from "./config/db";
+
+// Connect to Database
+connectDB();
 
 const app = express();
 
@@ -15,8 +21,10 @@ app.use(cors(corsOptions));
 // Body Parser
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 // Routes
+app.use("/auth", authRoutes);
 app.use("/", emailRoutes);
 
 // Health Check

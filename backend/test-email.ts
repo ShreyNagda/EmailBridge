@@ -1,6 +1,6 @@
 async function testEmail() {
   try {
-    const response = await fetch("http://127.0.0.1:3000/send-email", {
+    const response = await fetch("http://127.0.0.1:3000/finance-site", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -10,7 +10,6 @@ async function testEmail() {
         email: "test@example.com",
         phone: "1234567890",
         message: "This is a test message from the test script.",
-        clientId: "finance-site",
       }),
     });
 

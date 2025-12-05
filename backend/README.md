@@ -70,6 +70,24 @@ A secure Node.js + TypeScript backend microservice that receives contact form da
 }
 ```
 
+## Auth API
+
+**POST** `/auth/register`
+
+- Registers a new client.
+- Body: `{ "email": "...", "password": "...", "targetEmail": "...", "clientId": "..." }`
+
+**POST** `/auth/login`
+
+- Logs in a client.
+- Body: `{ "email": "...", "password": "..." }`
+- Returns: `{ "token": "...", ... }`
+
+**GET** `/auth/me`
+
+- Get current client info.
+- Headers: `Authorization: Bearer <token>`
+
 ## Configuration
 
 ### Client Email Mapping
