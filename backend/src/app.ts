@@ -12,6 +12,9 @@ connectDB();
 
 const app = express();
 
+// Trust Proxy (Required for Render/Heroku etc.)
+app.set("trust proxy", 1);
+
 // Security Headers
 app.use(helmet());
 

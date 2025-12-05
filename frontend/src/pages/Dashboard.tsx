@@ -16,6 +16,7 @@ import {
   Mail,
   ChevronLeft,
   ChevronRight,
+  Send,
 } from "lucide-react";
 import api from "../lib/axios";
 import { toast } from "react-toastify";
@@ -40,6 +41,9 @@ const Dashboard = () => {
   // Delete Account Dialog State
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
+
+  // Test Email State
+  const [sendingTestEmail, setSendingTestEmail] = useState(false);
 
   // Delete Item Dialog State
   const [showDeleteItemDialog, setShowDeleteItemDialog] = useState(false);
@@ -236,6 +240,25 @@ const Dashboard = () => {
     setCopied(true);
     toast.success("Copied to clipboard!");
     setTimeout(() => setCopied(false), 2000);
+  };
+
+  const handleSendTestEmail = async () => {
+    if (!user) return;
+    setSendingTestEmail(true);
+    try {
+      await api.post(`/${user.clientId}`, {
+        name: "Test User",
+        email: "test@example.com",
+        message: "This is a test email from your dashboard.",
+        subject: "Test Email from Dashboard",
+      });
+      toast.success("Test email sent successfully!");
+    } catch (error: any) {
+      console.error("Failed to send test email:", error);
+      toast.error(error.response?.data?.message || "Failed to send test email");
+    } finally {
+      setSendingTestEmail(false);
+    }
   };
 
   if (!user) return null;
@@ -630,6 +653,19 @@ const Dashboard = () => {
                           <span className="text-stone-500 italic">
                             No emails configured
                           </span>
+                        )}
+                        {user.targetEmails && user.targetEmails.length > 0 && (
+                          <div className="mt-3">
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              onClick={handleSendTestEmail}
+                              isLoading={sendingTestEmail}
+                              icon={Send}
+                            >
+                              Send Test Email
+                            </Button>
+                          </div>
                         )}
                       </dd>
                     </div>
